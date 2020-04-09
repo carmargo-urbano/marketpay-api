@@ -2,6 +2,7 @@ import Product from '../models/Products';
 
 class ProductController {
   async index(req, res) {
+    console.log('ProductsController index');
     const products = await Product.find();
 
     return res.json(products);
