@@ -1,49 +1,37 @@
-import 'dotenv/config';
+require('dotenv/config');
 
-import express from 'express';
-import cors from 'cors';
-import * as Sentry from '@sentry/node';
-import Youch from 'youch';
+const express = require('express');
+const cors = require('cors');
 
-import routes from './routes';
-import sentryConfig from './config/sentry';
+const Sentry = require('@sentry/node');
+const Youch = require('youch');
 
-import 'express-async-errors';
-import './database';
+const routes = require('./routes');
+const sentryConfig = require('./config/sentry');
+require('express-async-errors');
+require('./database');
 
-class App {
-  constructor() {
-    this.server = express();
+const app = express();
+Sentry.init(sentryConfig);
 
-    Sentry.init(sentryConfig);
+// middlewares
+app.use(Sentry.Handlers.requestHandler());
+app.use(cors());
+app.use(express.json());
 
-    this.middlewares();
-    this.routes();
-    this.exceptionHandler();
+// routes
+app.use(routes);
+app.use(Sentry.Handlers.errorHandler());
+
+// error handling
+app.use(async (err, req, res, next) => {
+  if (process.env.NODE_ENV === 'development') {
+    const errors = await new Youch(err, req).toJSON();
+
+    return res.status(500).json(errors);
   }
 
-  middlewares() {
-    this.server.use(Sentry.Handlers.requestHandler());
-    this.server.use(cors());
-    this.server.use(express.json());
-  }
+  return res.status(500).json({ error: 'Internal Server Error' });
+});
 
-  routes() {
-    this.server.use(routes);
-    this.server.use(Sentry.Handlers.errorHandler());
-  }
-
-  exceptionHandler() {
-    this.server.use(async (err, req, res, next) => {
-      if (process.env.NODE_ENV === 'development') {
-        const errors = await new Youch(err, req).toJSON();
-
-        return res.status(500).json(errors);
-      }
-
-      return res.status(500).json({ error: 'Internal Server Error' });
-    });
-  }
-}
-
-export default new App().server;
+module.exports = app;

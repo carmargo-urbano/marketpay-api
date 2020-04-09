@@ -1,6 +1,9 @@
-import { Router } from 'express';
+const express = require('express');
+const router = express.Router();
 
-import ProductController from './app/controllers/ProductController';
+// import { Router } from 'express';
+
+const ProductController = require('./app/controllers/ProductController');
 // import UserController from './app/controllers/UserController';
 // import SessionController from './app/controllers/SessionController';
 // import ProviderController from './app/controllers/ProviderController';
@@ -9,9 +12,9 @@ import ProductController from './app/controllers/ProductController';
 // import NotificationController from './app/controllers/NotificationController';
 // import AvailableController from './app/controllers/AvailableController';
 
-import authMiddleware from './app/middlewares/auth';
+// import authMiddleware from './app/middlewares/auth';
 
-const routes = new Router();
+// const routes = new Router();
 
 // Local middleware
 // routes.post('/users', UserController.store);
@@ -20,17 +23,17 @@ const routes = new Router();
 // ---------------------------------------------------------------
 // Global middleware
 // Public Routes
-routes.post('/products', ProductController.store);
-routes.get('/products', ProductController.index);
-routes.delete('/products/:id', ProductController.delete);
-routes.put('/products/:id', ProductController.update);
+router.post('/products', ProductController.store);
+router.get('/products', ProductController.index);
+router.delete('/products/:id', ProductController.delete);
+router.put('/products/:id', ProductController.update);
 // routes.post('/sessions', SessionController.store);
 
 
 // Private Routes
 // Todas as rotas que estiverem abaixo do middleware de autenticacao,
 // passarao a requisitar a autenticacao
-routes.use(authMiddleware);
+// routes.use(authMiddleware);
 // routes.put('/users', UserController.update);
 
 // routes.get('/providers', ProviderController.index);
@@ -45,4 +48,5 @@ routes.use(authMiddleware);
 // routes.get('/notifications', NotificationController.index);
 // routes.put('/notifications/:id', NotificationController.update);
 
-export default routes;
+// export default routes;
+module.exports = router;

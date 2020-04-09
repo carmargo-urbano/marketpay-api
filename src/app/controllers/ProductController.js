@@ -1,30 +1,26 @@
-import Product from '../models/Products';
+const Product = require('../models/Products');
 
-class ProductController {
-  async index(req, res) {
-    console.log('ProductsController index');
-    const products = await Product.find();
+exports.index = async function (req, res) {
+  console.log('ProductsController index');
+  const products = await Product.find();
 
-    return res.json(products);
-  }
-
-  async store(req, res) {
-    const product = await Product.create(req.body);
-
-    return res.json(product);
-  }
-
-  async delete(req, res) {
-    return res.json({
-      message: 'Em contrucao'
-    });
-  }
-
-  async update(req, res) {
-    return res.json({
-      message: 'Em contrucao'
-    });
-  }
+  return res.json(products);
 }
 
-export default new ProductController();
+exports.store = async function (req, res) {
+  const product = await Product.create(req.body);
+
+  return res.json(product);
+}
+
+exports.delete = async function (req, res) {
+  return res.json({
+    message: 'Em contrucao'
+  });
+}
+
+exports.update = async function (req, res) {
+  return res.json({
+    message: 'Em contrucao'
+  });
+}

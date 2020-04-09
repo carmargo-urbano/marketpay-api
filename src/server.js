@@ -1,4 +1,4 @@
-import app from '../src/app';
+const app = require('./app');
 
 function normalizePort(val) {
   const port = parseInt(val, 10);
