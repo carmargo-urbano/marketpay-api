@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+"use strict";const { Schema, model } = require('mongoose');
 
 const ProductSchema = new Schema({
   brand: {

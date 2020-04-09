@@ -1,6 +1,6 @@
-import { Router } from 'express';
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _express = require('express');
 
-import ProductController from './app/controllers/ProductController';
+var _ProductController = require('./app/controllers/ProductController'); var _ProductController2 = _interopRequireDefault(_ProductController);
 // import UserController from './app/controllers/UserController';
 // import SessionController from './app/controllers/SessionController';
 // import ProviderController from './app/controllers/ProviderController';
@@ -9,9 +9,9 @@ import ProductController from './app/controllers/ProductController';
 // import NotificationController from './app/controllers/NotificationController';
 // import AvailableController from './app/controllers/AvailableController';
 
-import authMiddleware from './app/middlewares/auth';
+var _auth = require('./app/middlewares/auth'); var _auth2 = _interopRequireDefault(_auth);
 
-const routes = new Router();
+const routes = new (0, _express.Router)();
 
 // Local middleware
 // routes.post('/users', UserController.store);
@@ -20,17 +20,17 @@ const routes = new Router();
 // ---------------------------------------------------------------
 // Global middleware
 // Public Routes
-routes.post('/products', ProductController.store);
-routes.get('/products', ProductController.index);
-routes.delete('/products/:id', ProductController.delete);
-routes.put('/products/:id', ProductController.update);
+routes.post('/products', _ProductController2.default.store);
+routes.get('/products', _ProductController2.default.index);
+routes.delete('/products/:id', _ProductController2.default.delete);
+routes.put('/products/:id', _ProductController2.default.update);
 // routes.post('/sessions', SessionController.store);
 
 
 // Private Routes
 // Todas as rotas que estiverem abaixo do middleware de autenticacao,
 // passarao a requisitar a autenticacao
-routes.use(authMiddleware);
+routes.use(_auth2.default);
 // routes.put('/users', UserController.update);
 
 // routes.get('/providers', ProviderController.index);
@@ -45,4 +45,4 @@ routes.use(authMiddleware);
 // routes.get('/notifications', NotificationController.index);
 // routes.put('/notifications/:id', NotificationController.update);
 
-export default routes;
+exports. default = routes;

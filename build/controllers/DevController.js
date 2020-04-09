@@ -1,4 +1,4 @@
-const axios = require('axios');
+"use strict";const axios = require('axios');
 const Dev = require('../models/Dev');
 
 module.exports = {

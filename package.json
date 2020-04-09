@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon ./bin/server.js",
-    "start": "node ./bin/server.js"
+    "start": "node ./bin/server.js",
+    "build": "sucrase ./src -d ./build --transforms imports"
   },
   "dependencies": {
     "@sentry/node": "^5.7.1",
