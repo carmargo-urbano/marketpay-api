@@ -1,4 +1,4 @@
-import app from './app';
+import app from '../src/app';
 
 function normalizePort(val) {
   const port = parseInt(val, 10);
@@ -17,6 +17,7 @@ function normalizePort(val) {
 const port = normalizePort(process.env.PORT || '3000');
 
 app.listen(port);
+console.log(`API rodando na porta ${port}`);
 
 // const http = require('http');
 // const app = require('./app');
@@ -74,4 +75,3 @@ app.listen(port);
 // server.listen(port);
 // server.on('error', onError);
 // server.on('listening', onListening);
-// console.log(`API rodando na porta ${port}`);
