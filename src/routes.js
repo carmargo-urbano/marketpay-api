@@ -4,6 +4,9 @@ const router = express.Router();
 // import { Router } from 'express';
 
 const ProductController = require('./app/controllers/ProductController');
+const ClientController = require('./app/controllers/ClientController');
+
+const auth = require('./app/middlewares/auth');
 // import UserController from './app/controllers/UserController';
 // import SessionController from './app/controllers/SessionController';
 // import ProviderController from './app/controllers/ProviderController';
@@ -27,6 +30,14 @@ router.post('/products', ProductController.store);
 router.get('/products', ProductController.index);
 router.delete('/products/:id', ProductController.delete);
 router.put('/products/:id', ProductController.update);
+
+
+router.post('/users', ClientController.store);
+router.post('/users/login', ClientController.login);
+
+router.get('/users/me', auth, ClientController.getMe);
+router.post('/users/me/logout', auth, ClientController.logout);
+router.post('/users/me/logoutall', auth, ClientController.logoutAll);
 // routes.post('/sessions', SessionController.store);
 
 

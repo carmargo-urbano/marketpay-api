@@ -1,23 +1,45 @@
-import jwt from 'jsonwebtoken';
-import { promisify } from 'util';
+const jwt = require('jsonwebtoken');
+const Client = require('../models/Client');
 
-import authConfig from '../../config/auth';
+const auth = async(req, res, next) => {
+    const token = req.header('Authorization').replace('Bearer ', '');
+    const data = jwt.verify(token, process.env.APP_SECRECT);
 
-export default async (req, res, next) => {
-  const authHeader = req.headers.authorization;
+    try {
+        const client = await Client.findOne({ _id: data._id, 'tokens.token': token });
+        if (!client) {
+            throw new Error();
+        }
+        req.client = client;
+        req.token = token;
+        next();
+    } catch (error) {
+        res.status(401).send({ error: 'Not authorized to access this resource' });
+    }
 
-  if (!authHeader) {
-    return res.status(401).json({ error: 'Token not provided' });
-  }
+}
+module.exports = auth;
 
-  const [, token] = authHeader.split(' ');
+// import jwt from 'jsonwebtoken';
+// import { promisify } from 'util';
 
-  try {
-    const decode = await promisify(jwt.verify)(token, authConfig.secret);
-    req.userId = decode.id;
+// import authConfig from '../../config/auth';
 
-    return next();
-  } catch (err) {
-    return res.status(401).json({ error: 'Invalid token' });
-  }
-};
+// export default async (req, res, next) => {
+//   const authHeader = req.headers.authorization;
+
+//   if (!authHeader) {
+//     return res.status(401).json({ error: 'Token not provided' });
+//   }
+
+//   const [, token] = authHeader.split(' ');
+
+//   try {
+//     const decode = await promisify(jwt.verify)(token, authConfig.secret);
+//     req.userId = decode.id;
+
+//     return next();
+//   } catch (err) {
+//     return res.status(401).json({ error: 'Invalid token' });
+//   }
+// };

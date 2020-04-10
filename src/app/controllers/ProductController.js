@@ -3,14 +3,14 @@ const Product = require('../models/Products');
 exports.index = async function (req, res) {
   const products = await Product.find();
 
-  return res.json(products);
-}
+  res.json(products);
+};
 
 exports.store = async function (req, res) {
   const product = await Product.create(req.body);
 
-  return res.json(product);
-}
+  res.json(product);
+};
 
 exports.delete = async function (req, res) {
   try {
@@ -23,7 +23,7 @@ exports.delete = async function (req, res) {
           message: 'Falha ao remover o produto.'
       });
   }
-}
+};
 
 exports.update = async function (req, res) {
   try {
@@ -38,4 +38,4 @@ exports.update = async function (req, res) {
           message: 'Falha ao atualizar.'
       });
   }
-}
+};
