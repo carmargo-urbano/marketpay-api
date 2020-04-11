@@ -11,6 +11,9 @@ const sentryConfig = require('./config/sentry');
 require('express-async-errors');
 require('./database');
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
 const app = express();
 Sentry.init(sentryConfig);
 
@@ -33,5 +36,8 @@ app.use(async (err, req, res, next) => {
 
   return res.status(500).json({ error: 'Internal Server Error' });
 });
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api/v1', routes);
 
 module.exports = app;

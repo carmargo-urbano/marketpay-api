@@ -1,0 +1,808 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Quick Pick API",
+    "description": "Quick Pick API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "Clients",
+      "description": "API for clients in the system"
+    },
+    {
+      "name": "Products",
+      "description": "API for products in the system"
+    },
+    {
+      "name": "Orders",
+      "description": "API for orders by the clients in the system"
+    },
+    {
+      "name": "Cart",
+      "description": "API for the cart by the clients in the system"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Create new client",
+        "description": "Create new client in system",
+        "operationId": "store",
+        "parameters": [
+          {
+            "name": "client",
+            "in": "body",
+            "required": true,
+            "description": "Client that we want to create",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New user is created",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          }
+        }
+      }
+    },
+    "/users/me": {
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Get information by logged client",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Update information by logged client",
+        "operationId": "updateMe",
+        "parameters": [
+          {
+            "name": "client",
+            "in": "body",
+            "required": true,
+            "description": "Update information of client that we want to update",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Logs user into the system",
+        "description": "",
+        "operationId": "login",
+        "parameters": [
+          {
+            "name": "client",
+            "in": "body",
+            "description": "Email and Password to log in client",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Login"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/LoginResponse"
+            }
+          },
+          "401": {
+            "description": "Invalid username/password supplied"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/users/me/logout": {
+      "post": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Logout client from current device",
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/users/me/logoutall": {
+      "post": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Logout client from all connected devices",
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/products": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get all products",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Product"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Create new product",
+        "description": "Create new product",
+        "parameters": [
+          {
+            "name": "product",
+            "in": "body",
+            "description": "Product that we want to create",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New product is created",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Update an existing product",
+        "description": "",
+        "operationId": "update",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Product object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Failed to update"
+          },
+          "200": {
+            "description": "Product has been updated successfully"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Deletes a product",
+        "description": "",
+        "operationId": "delete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Failed to delete"
+          },
+          "200": {
+            "description": "Product was deleted successfully"
+          }
+        }
+      }
+    },
+    "/orders": {
+      "post": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Create new order",
+        "description": "Create new order, only logged user can create a order",
+        "operationId": "store",
+        "parameters": [
+          {
+            "name": "order",
+            "in": "body",
+            "required": true,
+            "description": "Order that we want to create",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/CartItem"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New user is created",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/orders/filters": {
+      "post": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get all orders",
+        "description": "Only for admin",
+        "parameters": [
+          {
+            "name": "order",
+            "in": "body",
+            "description": "Only properties what you want to filter or empty without filters",
+            "required": false,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                },
+                "number": {
+                  "type": "integer"
+                },
+                "client": {
+                  "type": "string"
+                },
+                "method": {
+                  "type": "string"
+                },
+                "complete": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "List orders",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Order"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/orders/status/{orderId}": {
+      "put": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Update status by order",
+        "description": "Client can only update if status is WAITING_APPROVAL and Admin can change all status",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id from order to update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "New status",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "List orders",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/orders/me": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get all orders by logged user",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Order"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/cart": {
+      "get": {
+        "tags": [
+          "Cart"
+        ],
+        "summary": "Get cart for current user",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Cart"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Cart"
+        ],
+        "summary": "Create cart for current user",
+        "description": "Create cart for current user",
+        "parameters": [
+          {
+            "name": "cartItem",
+            "in": "body",
+            "description": "Product that we want to add and quantity",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CartItem"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Cart"
+            }
+          }
+        }
+      }
+    },
+    "cart/{cartId}": {
+      "delete": {
+        "tags": [
+          "Cart"
+        ],
+        "summary": "Remove cart",
+        "parameters": [
+          {
+            "name": "cartId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfull operation"
+          }
+        }
+      }
+    },
+    "/cart/produt/{productId}": {
+      "put": {
+        "tags": [
+          "Cart"
+        ],
+        "summary": "Update cart for current user",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "amount",
+            "description": "Quantity to be updated to the cart",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Cart"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Cart"
+        ],
+        "summary": "Remove product from cart",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Cart"
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "jwt_token",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "Client": {
+      "required": [
+        "name",
+        "email",
+        "password"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "password": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "roles": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Product": {
+      "required": [
+        "title",
+        "price",
+        "category"
+      ],
+      "properties": {
+        "brand": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "price": {
+          "type": "integer"
+        },
+        "category": {
+          "type": "string"
+        },
+        "discount": {
+          "type": "integer"
+        },
+        "amount": {
+          "type": "integer"
+        },
+        "offer": {
+          "type": "boolean"
+        },
+        "image": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Order": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string"
+        },
+        "client": {
+          "$ref": "#/definitions/Client"
+        },
+        "items": {
+          "type": "array",
+          "xml": {
+            "name": "product",
+            "wrapped": true
+          },
+          "items": {
+            "$ref": "#/definitions/CartItem"
+          }
+        },
+        "status": {
+          "type": "string",
+          "description": "Order Status",
+          "enum": [
+            "waiting_approval",
+            "approved",
+            "in_progress",
+            "ready_to_pick"
+          ]
+        },
+        "method": {
+          "type": "string",
+          "description": "Method",
+          "enum": [
+            "take_away",
+            "delivery"
+          ]
+        },
+        "complete": {
+          "type": "boolean",
+          "default": false
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Cart": {
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "client": {
+          "$ref": "#/definitions/Client"
+        },
+        "items": {
+          "type": "array",
+          "xml": {
+            "name": "product",
+            "wrapped": true
+          },
+          "items": {
+            "$ref": "#/definitions/CartItem"
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "CartItem": {
+      "properties": {
+        "product": {
+          "$ref": "#/definitions/Product"
+        },
+        "amount": {
+          "type": "integer"
+        },
+        "price": {
+          "type": "integer"
+        }
+      }
+    },
+    "Login": {
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "LoginResponse": {
+      "properties": {
+        "client": {
+          "$ref": "#/definitions/Client"
+        },
+        "token": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
