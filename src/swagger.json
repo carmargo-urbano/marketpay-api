@@ -323,13 +323,22 @@
         "operationId": "store",
         "parameters": [
           {
-            "name": "order",
+            "name": "body",
             "in": "body",
             "required": true,
-            "description": "Order that we want to create",
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/CartItem"
+            "description": "Order that we want to create and best time to pick the order",
+            "type": "object",
+            "properties": {
+              "items": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/CartItem"
+                }
+              },
+              "dateTimeToPick": {
+                "type": "string",
+                "format": "date-time"
+              }
             }
           }
         ],
@@ -723,6 +732,10 @@
             "take_away",
             "delivery"
           ]
+        },
+        "dateTimeToPick": {
+          "type": "string",
+          "format": "date-time"
         },
         "complete": {
           "type": "boolean",

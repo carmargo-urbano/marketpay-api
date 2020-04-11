@@ -37,6 +37,11 @@ const OrderSchema = new Schema({
     enum: ['take_away', 'delivery'],
     default: 'take_away'
   },
+  dateTimeToPick: {
+    type: Date,
+    required: true,
+    default: Date.now
+  },
   complete: {
     type: String,
     required: true,

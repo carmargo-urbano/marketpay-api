@@ -1,4 +1,5 @@
 const Order = require('../models/Orders');
+// const moment = require('moment');
 // const guid = require('guid');
 
 exports.getByAuthUser = async(req, res, next) => {
@@ -17,12 +18,38 @@ exports.getByAuthUser = async(req, res, next) => {
 };
 
 exports.store = async(req, res, next) => {
+  // const dateTimeToPick = moment(req.body.dateTimeToPick);
+  // const minDate = moment().add(1, 'd').hours(8).minutes(0).seconds(0);
+  // const maxDate = moment().add(5, 'd').hours(22).minutes(0).seconds(0);
+
+  // // Data minima para o pedido ficar pronto
+  // if (moment(dateTimeToPick).isBefore(moment(minDate))) {
+  //   res.status(400).send({
+  //     message: 'Data menor que o limite'
+  //   });
+  // }
+
+  // // Não pode escolher uma data maior que 5 dias
+  // if (moment(dateTimeToPick).isAfter(moment(maxDate))) {
+  //   res.status(400).send({
+  //     message: 'Data maior que o limite'
+  //   });
+  // }
+
+  // // Validar se a data escolhida é domingo
+  // if (moment(dateTimeToPick).format('DDD') === 'Sun') {
+  //   res.status(400).send({
+  //     message: 'Dia da semana inválido'
+  //   });
+  // }
+
   try {
     const order = await Order.create({
-        client: req.client.id,
-        // number: guid.raw().substring(0, 6),
-        number: Math.ceil(Math.random(1, 100) * 100),
-        items: req.body.items
+      client: req.client.id,
+      // number: guid.raw().substring(0, 6),
+      number: Math.ceil(Math.random(1, 100) * 100),
+      items: req.body.items,
+      dateTimeToPick: req.body.dateTimeToPick
     });
     res.status(201).send(order);
   } catch (e) {
