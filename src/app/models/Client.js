@@ -33,12 +33,12 @@ const ClientSchema = mongoose.Schema({
         required: true,
         minLength: 3
     },
-    roles: [{
+    roles: {
         type: String,
         required: true,
         enum: ['client', 'admin'],
         default: 'client'
-    }],
+    },
     active: {
         type: Boolean,
         required: true,

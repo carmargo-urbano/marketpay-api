@@ -30,6 +30,18 @@ exports.getMe = async function(req, res) {
   res.send(req.client);
 };
 
+exports.updateMe = async function (req, res) {
+  try {
+    const client = await Client.findByIdAndUpdate(req.client._id, {
+      $set: req.body
+    });
+
+    res.status(201).send(client);
+  } catch (error) {
+      res.status(400).send(error)
+  }
+};
+
 exports.logout = async (req, res) => {
   // Log user out of the application
   try {

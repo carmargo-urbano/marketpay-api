@@ -2,7 +2,12 @@ const jwt = require('jsonwebtoken');
 const Client = require('../models/Client');
 
 const auth = async(req, res, next) => {
-    const token = req.header('Authorization').replace('Bearer ', '');
+    const authorization = req.header('Authorization');
+    if (!authorization) {
+        res.status(401).send({ error: 'Not authorized to access this resource' });
+    }
+
+    const token = authorization.replace('Bearer ', '');
     const data = jwt.verify(token, process.env.APP_SECRECT);
 
     try {
