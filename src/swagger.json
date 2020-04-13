@@ -313,6 +313,57 @@
         }
       }
     },
+    "/products/stock/{id}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get stock from product",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string"
+                },
+                "amount": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/categories": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get categories from all products",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
     "/orders": {
       "post": {
         "tags": [

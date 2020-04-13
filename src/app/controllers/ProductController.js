@@ -39,3 +39,35 @@ exports.update = async function (req, res) {
       });
   }
 };
+
+exports.getStock = async function (req, res) {
+  const productId = req.params.id;
+
+  try {
+    const stock = await Product.findById(productId, 'id amount');
+
+    if (!stock.amount) {
+      stock.amount = 0;
+    }
+
+    res.send(stock);
+  } catch (error) {
+    res.status(500).send({
+      message: 'Falha ao processar sua requisição',
+      error
+    });
+  }
+};
+
+exports.getCategories = async function (req, res) {
+  try {
+    const categories = await Product.find({}, 'category').distinct('category');
+
+    res.send(categories);
+  } catch (error) {
+    res.status(500).send({
+      message: 'Falha ao processar sua requisição',
+      error
+    });
+  }
+}
