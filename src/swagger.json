@@ -250,6 +250,38 @@
       }
     },
     "/products/{id}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get an existing product",
+        "operationId": "getProduct",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Failed to get"
+          },
+          "200": {
+            "description": "Product information",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        }
+      },
       "put": {
         "tags": [
           "Products"

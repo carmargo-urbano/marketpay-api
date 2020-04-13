@@ -70,4 +70,16 @@ exports.getCategories = async function (req, res) {
       error
     });
   }
-}
+};
+
+exports.getProduct = async function (req, res) {
+  try {
+    const product = await Product.findById(req.params.id);
+
+    res.status(200).send(product);
+  } catch (e) {
+      res.status(500).send({
+          message: 'Falha ao remover o produto.'
+      });
+  }
+};

@@ -10,8 +10,9 @@ const StoreController = require('./app/controllers/StoreController');
 
 const auth = require('./app/middlewares/auth');
 
-router.post('/products', ProductController.store);
 router.get('/products', ProductController.index);
+router.post('/products', ProductController.store);
+router.get('/products/:id', ProductController.getProduct);
 router.delete('/products/:id', ProductController.delete);
 router.put('/products/:id', ProductController.update);
 router.get('/products/stock/:id', ProductController.getStock);
