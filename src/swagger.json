@@ -13,6 +13,10 @@
   "basePath": "/api/v1",
   "tags": [
     {
+      "name": "Stores",
+      "description": "API for store in the system"
+    },
+    {
       "name": "Clients",
       "description": "API for clients in the system"
     },
@@ -539,6 +543,143 @@
         ]
       }
     },
+    "/store": {
+      "get": {
+        "tags": [
+          "Stores"
+        ],
+        "summary": "Get all stores",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Store"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Stores"
+        ],
+        "summary": "Create new store",
+        "description": "Create new store",
+        "operationId": "store",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Store that we want to create",
+            "schema": {
+              "$ref": "#/definitions/Store"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New store is created",
+            "schema": {
+              "$ref": "#/definitions/Store"
+            }
+          }
+        }
+      }
+    },
+    "/store/{id}": {
+      "get": {
+        "tags": [
+          "Stores"
+        ],
+        "summary": "Get store",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id from store",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Store"
+              }
+            }
+          },
+          "404": {
+            "description": "Store not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Stores"
+        ],
+        "summary": "Update store",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id from store to update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Store"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Store",
+            "schema": {
+              "$ref": "#/definitions/Store"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Stores"
+        ],
+        "summary": "Delete store",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id from store to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successfull operation"
+          }
+        }
+      }
+    },
     "/cart": {
       "get": {
         "tags": [
@@ -667,6 +808,55 @@
     }
   },
   "definitions": {
+    "Store": {
+      "required": [
+        "name",
+        "address",
+        "city",
+        "state",
+        "cnpj",
+        "contactName",
+        "phone",
+        "whatsapp",
+        "method"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "cnpj": {
+          "type": "string"
+        },
+        "contactName": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "whatsapp": {
+          "type": "string"
+        },
+        "method": {
+          "type": "string",
+          "enum": [
+            "take_away",
+            "delivery"
+          ]
+        },
+        "active": {
+          "type": "boolean"
+        }
+      }
+    },
     "Client": {
       "required": [
         "name",

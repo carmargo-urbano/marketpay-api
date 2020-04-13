@@ -6,6 +6,7 @@ const router = express.Router();
 const ProductController = require('./app/controllers/ProductController');
 const ClientController = require('./app/controllers/ClientController');
 const OrderController = require('./app/controllers/OrderController');
+const StoreController = require('./app/controllers/StoreController');
 
 const auth = require('./app/middlewares/auth');
 
@@ -27,5 +28,11 @@ router.post('/orders', auth, OrderController.store);
 router.post('/orders/filters', auth, OrderController.getAllOrders);
 router.put('/orders/status/:id', auth, OrderController.updateStatus);
 router.get('/orders/me', auth, OrderController.getByAuthUser);
+
+router.get('/store', StoreController.index);
+router.get('/store/:id', StoreController.getStore);
+router.post('/store', StoreController.store);
+router.put('/store/:id', StoreController.update);
+router.delete('/store/:id', StoreController.delete);
 
 module.exports = router;
