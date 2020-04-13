@@ -318,7 +318,7 @@
         "tags": [
           "Products"
         ],
-        "summary": "Get stock from product",
+        "summary": "Get stock by product ID",
         "parameters": [
           {
             "name": "id",
@@ -708,9 +708,11 @@
     },
     "Product": {
       "required": [
+        "brand",
         "title",
         "price",
-        "category"
+        "category",
+        "amount"
       ],
       "properties": {
         "brand": {

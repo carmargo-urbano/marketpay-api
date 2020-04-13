@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 const ProductSchema = new Schema({
   brand: {
     type: String,
-    required: false
+    required: true
   },
   title: {
     type: String,
@@ -18,7 +18,10 @@ const ProductSchema = new Schema({
     required: true
   },
   discount: Number,
-  amount: Number,
+  amount: {
+    type: Number,
+    required: true
+  },
   offer: {
     type: Boolean,
     required: true,
