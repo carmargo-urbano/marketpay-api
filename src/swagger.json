@@ -30,7 +30,8 @@
     },
     {
       "name": "Cart",
-      "description": "API for the cart by the clients in the system"
+      "description": "API for the cart by the clients in the system",
+      "deprecated": true
     }
   ],
   "schemes": [
@@ -714,6 +715,7 @@
     },
     "/cart": {
       "get": {
+        "deprecated": true,
         "tags": [
           "Cart"
         ],
@@ -728,6 +730,7 @@
         }
       },
       "post": {
+        "deprecated": true,
         "tags": [
           "Cart"
         ],
@@ -759,6 +762,7 @@
     },
     "cart/{cartId}": {
       "delete": {
+        "deprecated": true,
         "tags": [
           "Cart"
         ],
@@ -780,6 +784,7 @@
     },
     "/cart/produt/{productId}": {
       "put": {
+        "deprecated": true,
         "tags": [
           "Cart"
         ],
@@ -809,6 +814,7 @@
         }
       },
       "delete": {
+        "deprecated": true,
         "tags": [
           "Cart"
         ],
