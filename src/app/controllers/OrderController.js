@@ -61,7 +61,6 @@ exports.store = async(req, res, next) => {
 };
 
 exports.getAllOrders = async(req, res, next) => {
-  console.log(req.client);
   if (!req.client.roles.includes('admin')) {
     res.status(403).send({
       message: 'Access denied'
@@ -75,8 +74,6 @@ exports.getAllOrders = async(req, res, next) => {
       .populate('client')
       .populate('items.product');
 
-    console.log('filters ', filters);
-    console.log('orders ', orders);
     res.status(200).send(orders);
   } catch (e) {
     res.status(500).send({

@@ -58,7 +58,6 @@ ClientSchema.pre('save', async function (next) {
     if (client.isModified('password')) {
         client.password = await bcrypt.hash(client.password, 8);
     }
-    console.log('pre save ', client);
     next();
 });
 
