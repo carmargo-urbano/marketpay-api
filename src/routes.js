@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-// import { Router } from 'express';
-
 const ProductController = require('./app/controllers/ProductController');
 const ClientController = require('./app/controllers/ClientController');
 const OrderController = require('./app/controllers/OrderController');
