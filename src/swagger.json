@@ -1051,6 +1051,9 @@
           "type": "string",
           "format": "date-time"
         },
+        "total": {
+          "type": "integer"
+        },
         "complete": {
           "type": "boolean",
           "default": false
