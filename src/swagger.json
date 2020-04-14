@@ -9,6 +9,10 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
+  "schemes": [
+    "http",
+    "https"
+  ],
   "basePath": "/api/v1",
   "tags": [
     {
@@ -32,9 +36,6 @@
       "description": "API for the cart by the clients in the system",
       "deprecated": true
     }
-  ],
-  "schemes": [
-    "http"
   ],
   "consumes": [
     "application/json"
