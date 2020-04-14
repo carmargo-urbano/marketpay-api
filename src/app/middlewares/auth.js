@@ -8,10 +8,13 @@ const auth = async(req, res, next) => {
     }
 
     const token = authorization.replace('Bearer ', '');
+    console.log('auth.js token: ', token);
     const data = jwt.verify(token, process.env.APP_SECRECT);
+    console.log('auth.js data: ', data);
 
     try {
         const client = await Client.findOne({ _id: data._id, 'tokens.token': token });
+        console.log('auth.js client: ', client);
         if (!client) {
             throw new Error();
         }
