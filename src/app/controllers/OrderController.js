@@ -50,7 +50,8 @@ exports.store = async(req, res, next) => {
       // number: guid.raw().substring(0, 6),
       // number: Math.ceil(Math.random(1, 100) * 100),
       items: req.body.items,
-      dateTimeToPick: req.body.dateTimeToPick
+      dateTimeToPick: req.body.dateTimeToPick,
+      total: req.body.total
     });
     res.status(201).send(order);
   } catch (e) {

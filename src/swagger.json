@@ -449,6 +449,9 @@
               "dateTimeToPick": {
                 "type": "string",
                 "format": "date-time"
+              },
+              "total": {
+                "type": "integer"
               }
             }
           }

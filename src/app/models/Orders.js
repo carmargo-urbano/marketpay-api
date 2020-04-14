@@ -42,6 +42,10 @@ const OrderSchema = new Schema({
     required: true,
     default: Date.now
   },
+  total: {
+    type: Number,
+    required: true
+  },
   complete: {
     type: String,
     required: true,
