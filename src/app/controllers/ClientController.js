@@ -1,4 +1,5 @@
 const Client = require('../models/Client');
+const bcrypt = require('bcryptjs');
 
 exports.store = async function (req, res) {
   try {
@@ -31,6 +32,11 @@ exports.getMe = async function(req, res) {
 };
 
 exports.updateMe = async function (req, res) {
+
+  if (req.body.password) {
+    req.body.password = await bcrypt.hash(req.body.password, 8);
+  }
+
   try {
     const client = await Client.findByIdAndUpdate(req.client._id, {
       $set: req.body
