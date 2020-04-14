@@ -81,6 +81,7 @@
           "Clients"
         ],
         "summary": "Get information by logged client",
+        "operationId": "getMe",
         "responses": {
           "200": {
             "description": "OK",
@@ -137,12 +138,20 @@
         "operationId": "login",
         "parameters": [
           {
-            "name": "client",
+            "name": "body",
             "in": "body",
             "description": "Email and Password to log in client",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Login"
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
             }
           }
         ],
@@ -153,7 +162,15 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "$ref": "#/definitions/LoginResponse"
+              "type":"object",
+              "properties": {
+                "client": {
+                  "$ref": "#/definitions/Client"
+                },
+                "token": {
+                  "type": "string"
+                }
+              }
             }
           },
           "401": {
@@ -171,6 +188,7 @@
           "Clients"
         ],
         "summary": "Logout client from current device",
+        "operationId": "logout",
         "responses": {
           "default": {
             "description": "successful operation"
@@ -189,6 +207,7 @@
           "Clients"
         ],
         "summary": "Logout client from all connected devices",
+        "operationId": "logoutAll",
         "responses": {
           "default": {
             "description": "successful operation"
@@ -207,6 +226,7 @@
           "Products"
         ],
         "summary": "Get all products",
+        "operationId": "index",
         "responses": {
           "200": {
             "description": "OK",
@@ -225,6 +245,7 @@
         ],
         "summary": "Create new product",
         "description": "Create new product",
+        "operationId": "store",
         "parameters": [
           {
             "name": "product",
@@ -355,6 +376,7 @@
           "Products"
         ],
         "summary": "Get stock by product ID",
+        "operationId": "getStock",
         "parameters": [
           {
             "name": "id",
@@ -387,6 +409,7 @@
           "Products"
         ],
         "summary": "Get categories from all products",
+        "operationId": "getCategories",
         "responses": {
           "200": {
             "description": "OK",
@@ -511,6 +534,7 @@
         ],
         "summary": "Update status by order",
         "description": "Client can only update if status is WAITING_APPROVAL and Admin can change all status",
+        "operationId": "updateStatus",
         "parameters": [
           {
             "name": "id",
@@ -558,6 +582,7 @@
           "Orders"
         ],
         "summary": "Get all orders by logged user",
+        "operationId": "getByAuthUser",
         "responses": {
           "200": {
             "description": "OK",
@@ -582,6 +607,7 @@
           "Stores"
         ],
         "summary": "Get all stores",
+        "operationId": "index",
         "responses": {
           "200": {
             "description": "OK",
@@ -631,6 +657,7 @@
           "Stores"
         ],
         "summary": "Get store",
+        "operationId": "getStore",
         "parameters": [
           {
             "name": "id",
@@ -660,6 +687,7 @@
           "Stores"
         ],
         "summary": "Update store",
+        "operationId": "update",
         "parameters": [
           {
             "name": "id",
@@ -694,6 +722,7 @@
           "Stores"
         ],
         "summary": "Delete store",
+        "operationId": "delete",
         "parameters": [
           {
             "name": "id",
@@ -1070,31 +1099,6 @@
         },
         "price": {
           "type": "integer"
-        }
-      }
-    },
-    "Login": {
-      "required": [
-        "email",
-        "password"
-      ],
-      "properties": {
-        "email": {
-          "type": "string",
-          "uniqueItems": true
-        },
-        "password": {
-          "type": "string"
-        }
-      }
-    },
-    "LoginResponse": {
-      "properties": {
-        "client": {
-          "$ref": "#/definitions/Client"
-        },
-        "token": {
-          "type": "string"
         }
       }
     }
