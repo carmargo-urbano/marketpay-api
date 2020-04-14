@@ -20,7 +20,7 @@ exports.delete = async function (req, res) {
     });
   } catch (e) {
       res.status(500).send({
-          message: 'Falha ao remover o produto.'
+          message: 'Falha ao remover o produto!'
       });
   }
 };
@@ -60,6 +60,7 @@ exports.getStock = async function (req, res) {
 };
 
 exports.getCategories = async function (req, res) {
+  console.log('getCategories');
   try {
     const categories = await Product.find({}, 'category').distinct('category');
 
@@ -79,7 +80,7 @@ exports.getProduct = async function (req, res) {
     res.status(200).send(product);
   } catch (e) {
       res.status(500).send({
-          message: 'Falha ao remover o produto.'
+          message: 'Falha ao processar sua requisição.'
       });
   }
 };

@@ -10,11 +10,11 @@ const auth = require('./app/middlewares/auth');
 
 router.get('/products', ProductController.index);
 router.post('/products', ProductController.store);
+router.get('/products/categories', ProductController.getCategories);
 router.get('/products/:id', ProductController.getProduct);
 router.delete('/products/:id', ProductController.delete);
 router.put('/products/:id', ProductController.update);
 router.get('/products/stock/:id', ProductController.getStock);
-router.get('/products/categories', ProductController.getCategories);
 
 router.post('/users', ClientController.store);
 router.post('/users/login', ClientController.login);

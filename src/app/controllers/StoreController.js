@@ -30,7 +30,7 @@ exports.delete = async function (req, res) {
     });
   } catch (e) {
       res.status(500).send({
-          message: 'Falha ao remover o produto.'
+          message: 'Falha ao remover a loja.'
       });
   }
 };

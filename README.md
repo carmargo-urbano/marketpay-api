@@ -35,3 +35,10 @@ The docker run -d -p 27017:27107 -v ~/data:/data/db mongo does 3 main things:
 
 
 https://www.thachmai.info/2015/04/30/running-mongodb-container/
+
+
+
+
+
+docker run -d -p 27017:27017 -v /Users/user/Projects/marketpay/data:/data/db mongo
+docker stop $(docker ps -a -q)
