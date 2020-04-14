@@ -455,6 +455,7 @@
         ],
         "summary": "Get all orders",
         "description": "Only for admin",
+        "operationId": "getAllOrders",
         "parameters": [
           {
             "name": "order",

@@ -1,6 +1,6 @@
 const Order = require('../models/Orders');
-// const moment = require('moment');
-// const guid = require('guid');
+const moment = require('moment');
+const { v4: uuidv4 } = require('uuid');
 
 exports.getByAuthUser = async(req, res, next) => {
   try {
@@ -46,8 +46,9 @@ exports.store = async(req, res, next) => {
   try {
     const order = await Order.create({
       client: req.client.id,
+      number: uuidv4(),
       // number: guid.raw().substring(0, 6),
-      number: Math.ceil(Math.random(1, 100) * 100),
+      // number: Math.ceil(Math.random(1, 100) * 100),
       items: req.body.items,
       dateTimeToPick: req.body.dateTimeToPick
     });
@@ -60,6 +61,7 @@ exports.store = async(req, res, next) => {
 };
 
 exports.getAllOrders = async(req, res, next) => {
+  console.log(req.client);
   if (!req.client.roles.includes('admin')) {
     res.status(403).send({
       message: 'Access denied'
@@ -72,7 +74,10 @@ exports.getAllOrders = async(req, res, next) => {
     const orders = await Order.find(filters)
       .populate('client')
       .populate('items.product');
-    res.status(201).send(orders);
+
+    console.log('filters ', filters);
+    console.log('orders ', orders);
+    res.status(200).send(orders);
   } catch (e) {
     res.status(500).send({
         message: 'Falha ao processar sua requisição'
