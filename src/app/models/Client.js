@@ -58,6 +58,16 @@ ClientSchema.pre('save', async function (next) {
     if (client.isModified('password')) {
         client.password = await bcrypt.hash(client.password, 8);
     }
+    console.log('pre save ', client);
+    next();
+});
+
+ClientSchema.pre('updateOne', function(next) {
+    const client = this;
+    if (client.isModified('password')) {
+        client.password = await bcrypt.hash(client.password, 8);
+    }
+    console.log('pre updateOne ', client);
     next();
 });
 
