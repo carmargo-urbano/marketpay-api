@@ -37,7 +37,13 @@ app.use(async (err, req, res, next) => {
   return res.status(500).json({ error: 'Internal Server Error' });
 });
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// "host": "localhost:3000",
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', function(req, res, next){
+  swaggerDocument.host = req.get('host');
+  req.swaggerDoc = swaggerDocument;
+  next();
+}, swaggerUi.serve, swaggerUi.setup());
 app.use('/api/v1', routes);
 
 module.exports = app;
