@@ -1,10 +1,20 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+// const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({ dest: './src/import' });
+// var storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, '/Users/user/Projects/marketpay/marketpay-api/import')
+//   }
+// });
+// const upload = multer({ storage: storage });
 
 const ProductController = require('./app/controllers/ProductController');
 const ClientController = require('./app/controllers/ClientController');
 const OrderController = require('./app/controllers/OrderController');
 const StoreController = require('./app/controllers/StoreController');
+const ImportController = require('./app/controllers/ImportController');
 
 const auth = require('./app/middlewares/auth');
 
@@ -33,5 +43,7 @@ router.get('/store/:id', StoreController.getStore);
 router.post('/store', StoreController.store);
 router.put('/store/:id', StoreController.update);
 router.delete('/store/:id', StoreController.delete);
+
+router.post('/importProducts', upload.single('arquivo'), ImportController.importProducts);
 
 module.exports = router;

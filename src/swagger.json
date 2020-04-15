@@ -869,6 +869,34 @@
           }
         }
       }
+    },
+    "/importProducts": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Import a list of products",
+        "consumes":[
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "arquivo",
+            "in": "formData",
+            "type": "file",
+            "description": "Product that we want to add and quantity",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "securityDefinitions": {
