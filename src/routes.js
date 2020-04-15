@@ -37,6 +37,7 @@ router.post('/orders', auth, OrderController.store);
 router.post('/orders/filters', auth, OrderController.getAllOrders);
 router.put('/orders/status/:id', auth, OrderController.updateStatus);
 router.get('/orders/me', auth, OrderController.getByAuthUser);
+router.get('/orders/:id', auth, OrderController.getById);
 
 router.get('/store', StoreController.index);
 router.get('/store/:id', StoreController.getStore);

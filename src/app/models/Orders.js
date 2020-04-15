@@ -46,6 +46,11 @@ const OrderSchema = new Schema({
     type: Number,
     required: true
   },
+  qrcodeRead: {
+    type: String,
+    required: true,
+    default: false
+  },
   complete: {
     type: String,
     required: true,

@@ -605,6 +605,34 @@
         ]
       }
     },
+    "/orders/{id}": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get an order by order id",
+        "operationId": "getById",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Order"
+              }
+            }
+          },
+          "400": {
+            "description": "Order not found"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
     "/store": {
       "get": {
         "tags": [
@@ -1081,6 +1109,10 @@
         },
         "total": {
           "type": "integer"
+        },
+        "qrcodeRead": {
+          "type": "boolean",
+          "default": false
         },
         "complete": {
           "type": "boolean",

@@ -83,7 +83,7 @@ exports.getAllOrders = async(req, res, next) => {
   }
 };
 
-exports.updateStatus = async(req, res, next) => {
+exports.updateStatus = async(req, res) => {
   if (!req.body.status) {
     res.status(400).send({
       message: 'Missing status'
@@ -118,5 +118,29 @@ exports.updateStatus = async(req, res, next) => {
     res.status(500).send({
       message: 'Falha ao processar sua requisição'
     });
+  }
+};
+
+exports.getById = async(req, res) => {
+  const order = await Order.findById(req.params.id)
+    .populate('client')
+    .populate('items.product');;
+
+  if (!order) {
+    res.status(400).send({ message: 'Pedido não encontrado' });
+  }
+
+  if (req.client.roles.includes('client') && order.client._id === req.client._id) {
+    res.send(order);
+  } else if (req.client.roles.includes('admin')) {
+    await Order.findByIdAndUpdate(req.params.id, {
+      $set: {
+        qrcodeRead: true
+      }
+    });
+
+    res.send(order);
+  } else {
+    res.status(400).send({ message: 'Pedido não encontrado' });
   }
 };
