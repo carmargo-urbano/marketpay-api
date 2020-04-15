@@ -133,11 +133,14 @@ exports.getById = async(req, res) => {
   if (req.client.roles.includes('client') && order.client._id === req.client._id) {
     res.send(order);
   } else if (req.client.roles.includes('admin')) {
-    await Order.findByIdAndUpdate(req.params.id, {
-      $set: {
-        qrcodeRead: true
-      }
-    });
+
+    if (req.query.qrcode) {
+      await Order.findByIdAndUpdate(req.params.id, {
+        $set: {
+          qrcodeRead: true
+        }
+      });
+    }
 
     res.send(order);
   } else {

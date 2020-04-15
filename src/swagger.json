@@ -612,6 +612,22 @@
         ],
         "summary": "Get an order by order id",
         "operationId": "getById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Order id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "qrcode",
+            "in": "query",
+            "description": "endpoint accessed by qrcode?",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
