@@ -122,9 +122,11 @@ exports.updateStatus = async(req, res) => {
 };
 
 exports.getById = async(req, res) => {
-  const order = await Order.findById(req.params.id)
-    .populate('client')
-    .populate('items.product');;
+  const order = await Order.find({
+    number: req.params.number
+  })
+  .populate('client')
+  .populate('items.product');
 
   if (!order) {
     res.status(400).send({ message: 'Pedido não encontrado' });
@@ -135,7 +137,7 @@ exports.getById = async(req, res) => {
   } else if (req.client.roles.includes('admin')) {
 
     if (req.query.qrcode) {
-      await Order.findByIdAndUpdate(req.params.id, {
+      await Order.findByIdAndUpdate(order._id, {
         $set: {
           qrcodeRead: true
         }

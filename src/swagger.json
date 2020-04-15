@@ -605,18 +605,18 @@
         ]
       }
     },
-    "/orders/{id}": {
+    "/orders/{number}": {
       "get": {
         "tags": [
           "Orders"
         ],
         "summary": "Get an order by order id",
-        "operationId": "getById",
+        "operationId": "getByNumber",
         "parameters": [
           {
-            "name": "id",
+            "name": "number",
             "in": "path",
-            "description": "Order id",
+            "description": "Order number",
             "required": true,
             "type": "string"
           },
