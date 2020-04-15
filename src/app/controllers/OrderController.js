@@ -121,7 +121,7 @@ exports.updateStatus = async(req, res) => {
   }
 };
 
-exports.getById = async(req, res) => {
+exports.getByNumber = async(req, res) => {
   const order = await Order.find({
     number: req.params.number
   })
