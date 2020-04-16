@@ -56,7 +56,8 @@ exports.store = async(req, res, next) => {
     res.status(201).send(order);
   } catch (e) {
     res.status(500).send({
-        message: 'Falha ao processar sua requisição'
+      error: e,
+      message: 'Falha ao processar sua requisição'
     });
   }
 };
@@ -147,5 +148,75 @@ exports.getByNumber = async(req, res) => {
     res.send(order);
   } else {
     res.status(400).send({ message: 'Pedido não encontrado' });
+  }
+};
+
+exports.getOrders = async(req, res, next) => {
+  if (!req.client.roles.includes('admin')) {
+    res.status(403).send({
+      message: 'Access denied'
+    });
+  }
+
+  let filters = req.query ? { ...req.query } : {};
+  const availableFilters = [
+    'status',
+    'method',
+    'number',
+    'complete',
+    'qrcodeRead',
+  ];
+
+  // Remove invalid filters
+  Object.keys(filters).forEach(filter => {
+    if (!availableFilters.includes(filter)) {
+      delete filters[filter];
+    }
+  });
+
+  const pageOptions = {
+    page: parseInt(req.query.page, 10) || 0,
+    limit: parseInt(req.query.limit, 10) || 10
+  };
+
+  const dateOptions = {
+    startDate: req.query.startDate || moment().startOf('day').format('YYYY-MM-DD'),
+    endDate: req.query.endDate || moment().endOf('day').format('YYYY-MM-DD')
+  };
+
+  if (!moment(dateOptions.startDate, 'YYYY-MM-DD', true).isValid() || !moment(dateOptions.endDate, 'YYYY-MM-DD', true).isValid()) {
+    return res.status(400).send({
+      message: 'Datas inválidas'
+    });
+  }
+
+  if (moment(dateOptions.startDate).isAfter(moment(dateOptions.endDate))) {
+    return res.status(400).send({
+      message: 'Data de início não deve ser maior que data de fim'
+    });
+  }
+
+  filters = {
+    ...filters,
+    dateTimeToPick: {
+      $gte: new Date(dateOptions.startDate),
+      $lte: new Date(dateOptions.endDate)
+    }
+  };
+
+  try {
+    const orders = await Order.find(filters)
+      .skip(pageOptions.page * pageOptions.limit)
+      .limit(pageOptions.limit)
+      .populate('client')
+      .populate('items.product');
+
+    res.status(200).send(orders);
+  } catch (e) {
+    res.status(500).send({
+        message: 'Falha ao processar sua requisição',
+        error: e,
+        filters
+    });
   }
 };

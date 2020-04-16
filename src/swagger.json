@@ -472,10 +472,107 @@
             "JWT": []
           }
         ]
+      },
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get orders",
+        "description": "Get orders, sending or not filters",
+        "operationId": "getOrders",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "description": "status",
+            "required": false
+          },
+          {
+            "name": "method",
+            "in": "query",
+            "description": "method",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "number",
+            "in": "query",
+            "description": "number",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "qrcodeRead",
+            "in": "query",
+            "description": "qrcodeRead",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "complete",
+            "in": "query",
+            "description": "complete",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "items per page",
+            "required": false,
+            "type": "number"
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "Start Date for Date Time to Pick",
+            "required": false,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "description": "End Date for Date Time to Pick",
+            "required": false,
+            "type": "string",
+            "format": "date"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "List orders",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Order"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request: Invalid dates"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/orders/filters": {
       "post": {
+        "deprecated": true,
         "tags": [
           "Orders"
         ],
